@@ -1,92 +1,106 @@
 "use client";
 
 import { useState } from "react";
+import { Check, Copy, Eye, EyeOff } from "lucide-react";
+import Image from "next/image";
 
 interface CodeBlockProps {
   code: string;
   images?: string[];
-  instructions?: string;
+  instructions: string;
+  title?: string;
 }
 
 export default function CodeBlock({
   code,
-  images,
+  images = [],
   instructions,
+  title,
 }: CodeBlockProps) {
-  const [copied, setCopied] = useState(false);
   const [showCode, setShowCode] = useState(false);
-  const handleCopy = async () => {
+  const [copied, setCopied] = useState(false);
+
+  const copyToClipboard = async () => {
     await navigator.clipboard.writeText(code);
     setCopied(true);
-
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div>
-      {" "}
-      <h2 className="text-xl font-semibold mb-4">Reference Images</h2>
-      <div className="grid grid-cols-12 gap-4 bg-white border border-border p-4 rounded-lg mb-6">
-        {images && images.length > 0 ? (
-          images.map((src, index) => (
-            <div key={index} className="col-span-12 ">
-              <img
-                src={src}
-                alt={`Image ${index + 1}`}
-                className="object-cover rounded-lg"
-              />
-              <hr className="col-span-12 border-t border-border my-4" />
-            </div>
-          ))
-        ) : (
-          <div className="col-span-12">
-            <p className="text-gray-500 text-center py-8">
-              No images to display
-            </p>
-          </div>
-        )}
-      </div>
-      <div className="bg-white border border-border p-4 rounded-lg mb-6">
-        <h2 className="text-xl font-semibold mb-4">Instructions</h2>
-        <p className="text-gray-700">
-          {instructions || "No instructions provided."}
-        </p>
-      </div>
-      <h2 className="text-xl font-semibold mb-4">Code</h2>
-      <div className="space-y-4">
-        {/* Toggle Button */}
-        <button
-          onClick={() => setShowCode(!showCode)}
-          className="px-4 py-2 text-sm rounded-lg border border-border 
-        bg-card hover:bg-accent transition"
-        >
-          {showCode ? "Hide Code" : "Show Code"}
-        </button>
-
-        {/* Animated Code Container */}
-        <div
-          className={`transition-all duration-300 ease-in-out overflow-auto ${
-            showCode ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="relative mt-2">
-            {/* Copy Button */}
-            <button
-              onClick={handleCopy}
-              className="absolute top-3 right-3 text-xs px-3 py-1 rounded-md 
-            bg-primary text-primary-foreground hover:opacity-80 transition"
+    <div className="space-y-6">
+      {/* Images Section */}
+      {images.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {images.map((image, index) => (
+            <div
+              key={index}
+              className="relative aspect-video rounded-lg overflow-hidden border border-border shadow-soft"
             >
-              {copied ? "Copied!" : "Copy"}
-            </button>
-
-            {/* Code Block */}
-            <pre className="bg-card border border-border p-6 rounded-2xl overflow-auto  text-sm font-mono shadow-[var(--shadow-soft)]">
-              <code>{code}</code>
-            </pre>
-          </div>
+              <Image
+                src={image}
+                alt={`${title || "Component"} reference ${index + 1}`}
+                fill
+                className="object-cover"
+              />
+            </div>
+          ))}
         </div>
+      )}
+
+      {/* Instructions Section */}
+      <div className="bg-card rounded-lg p-6 border border-border shadow-soft">
+        <h2 className="text-xl font-display font-semibold mb-4">
+          Instructions
+        </h2>
+        <div className="prose prose-sm max-w-none">
+          <p className="text-muted-foreground whitespace-pre-wrap">
+            {instructions}
+          </p>
+        </div>
+      </div>
+
+      {/* Code Section */}
+      <div className="bg-card rounded-lg border border-border shadow-soft overflow-hidden">
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setShowCode(!showCode)}
+              className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors"
+            >
+              {showCode ? (
+                <EyeOff className="w-4 h-4" />
+              ) : (
+                <Eye className="w-4 h-4" />
+              )}
+              <span className="text-sm font-medium">
+                {showCode ? "Hide Code" : "Show Code"}
+              </span>
+            </button>
+          </div>
+          {showCode && (
+            <button
+              onClick={copyToClipboard}
+              className="flex items-center space-x-2 px-3 py-1.5 rounded-lg bg-secondary hover:bg-secondary/80 transition-colors"
+            >
+              {copied ? (
+                <Check className="w-4 h-4 text-green-600" />
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
+              <span className="text-sm font-medium">
+                {copied ? "Copied!" : "Copy Code"}
+              </span>
+            </button>
+          )}
+        </div>
+
+        {showCode && (
+          <pre className="p-4 overflow-x-auto bg-primary/5">
+            <code className="text-sm font-mono whitespace-pre-wrap">
+              {code}
+            </code>
+          </pre>
+        )}
       </div>
     </div>
   );
