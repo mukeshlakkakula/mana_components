@@ -23,7 +23,7 @@ export default function Sidebar() {
     >
       {/* Top Section */}
       <div className="flex items-center justify-between mb-6">
-        {isOpen && <h2 className="text-lg font-semibold">Components</h2>}
+        {isOpen && <h2 className="text-lg font-semibold">Mana Components</h2>}
       </div>
 
       {/* Links */}

@@ -67,7 +67,7 @@ export default function CodeBlock({
 
         {/* Animated Code Container */}
         <div
-          className={`transition-all duration-300 ease-in-out overflow-hidden ${
+          className={`transition-all duration-300 ease-in-out overflow-auto ${
             showCode ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
           }`}
         >
@@ -82,7 +82,7 @@ export default function CodeBlock({
             </button>
 
             {/* Code Block */}
-            <pre className="bg-card border border-border p-6 rounded-2xl overflow-x-auto text-sm font-mono shadow-[var(--shadow-soft)]">
+            <pre className="bg-card border border-border p-6 rounded-2xl overflow-auto  text-sm font-mono shadow-[var(--shadow-soft)]">
               <code>{code}</code>
             </pre>
           </div>
