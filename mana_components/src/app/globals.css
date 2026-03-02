@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+:root {
+  /* Fonts */
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+
+  /* Backgrounds */
+  --background: 40 20% 98%;
+  --foreground: 169 37% 16%;
+
+  /* Primary */
+  --primary: 169 37% 16%;
+  --primary-foreground: 0 0% 100%;
+
+  /* Secondary */
+  --secondary: 154 20% 88%;
+  --secondary-foreground: 169 37% 16%;
+
+  /* Accent */
+  --accent: 40 40% 90%;
+  --accent-foreground: 169 37% 16%;
+
+  --muted: 154 10% 92%;
+  --muted-foreground: 169 15% 45%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 169 37% 16%;
+
+  --border: 154 20% 88%;
+  --input: 154 20% 88%;
+  --ring: 169 37% 16%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --radius: 1rem;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 40px -10px rgba(26, 55, 49, 0.08);
+  --shadow-float: 0 20px 50px -15px rgba(26, 55, 49, 0.15);
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius-lg: var(--radius);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  @apply tracking-tight;
+}
